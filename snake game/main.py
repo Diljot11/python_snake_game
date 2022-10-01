@@ -7,6 +7,7 @@ import time
 
 screen = Screen()
 screen.setup(600, 600)
+# open(highscore.txt
 
 screen.bgcolor('black')
 foodii = 0
@@ -15,11 +16,10 @@ screen.title('Snake game Nokia 3310 ')
 
 screen.tracer(0)
 snake = Snake()
-
 food = Food()
 score = ScoreBoard()
-screen.listen()
 
+screen.listen()
 screen.onkey(snake.up, 'Up')
 screen.onkey(snake.down, 'Down')
 screen.onkey(snake.right, 'Right')
@@ -28,7 +28,6 @@ game = True
 
 while game:
     screen.update()
-
     time.sleep(y)
     snake.move()
     if snake.head.distance(food) < 15:
@@ -44,15 +43,21 @@ while game:
             print('3')
             y -= 0.001
         food.refresh()
-        snake.add()
+        snake.add_size()
     if snake.head.xcor() > 290 or snake.head.xcor() < -290 or snake.head.ycor() > 290 or snake.head.ycor() < -290:
-        game = False
-        score.gameover()
+        # game = False
+        # snake.segments=[]
+        snake.reset()
+        score.refresh()
+        y = 0.15
+
     for seg in snake.segments:
         if seg == snake.head:
             pass
         elif snake.head.distance(seg) < 2:
-            game = False
-            score.gameover()
+            # game = False
+            score.refresh()
+            snake.reset()
+            y = 0.15
 
 screen.exitonclick()
